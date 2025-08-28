@@ -1,26 +1,15 @@
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        int n = nums.length;
-        HashMap<Integer,Integer> map=new HashMap<>();
-        Arrays.sort(nums);
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]>0){
-            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        int[] filteredNums = Arrays.stream(nums).filter(n -> n > 0).toArray();
+        Arrays.sort(filteredNums);
+        int target = 1;
+        for (int n : filteredNums) {
+            if (n == target) {
+                target++;
+            } else if (n > target) {
+                return target;
             }
-        }   
-        int missingpositive = 1;
-        while (missingpositive <= nums[n-1]){ 
-			if (!map.containsKey(missingpositive))
-            { return missingpositive; }
-             missingpositive++;
         }
-        return missingpositive;
+        return target;        
     }
 }
-// }import java.util.* ;
-// import java.io.*; 
-// public class Solution {
-// 	public static int firstMissing(int[] arr, int n) {	
-// 		;	
-// 	}
-// }
