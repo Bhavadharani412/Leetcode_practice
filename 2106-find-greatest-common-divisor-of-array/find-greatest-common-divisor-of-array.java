@@ -9,6 +9,6 @@ class Solution {
     }
     public int gcd(int a, int b){
         if(b == 0) return a;
-        else return gcd(b, Math.abs(a % b));
+        else return gcd(b, (a % b));
     }
 }
