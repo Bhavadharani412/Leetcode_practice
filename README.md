@@ -8,9 +8,20 @@ Every line here represents one more brick in the wall of mastery.
 
 ## 📊 LeetCode Progress
 
-![LeetCode Stats](https://leetcard.jacoblin.cool/K_BHAVADHARANI?theme=dark&ext=heatmap&font=baloo&border=0&radius=10)
 
----
+<table>
+  <tr>
+    <td align="center">
+      <h3>Contest Rating</h3>
+      <img src="https://leetcard.jacoblin.cool/K_BHAVADHARANI?theme=dark&font=Montserrat&ext=contest" />
+    </td>
+    <td align="center">
+      <h3>Heatmap</h3>
+      <img src="https://leetcard.jacoblin.cool/K_BHAVADHARANI?theme=dark&font=Montserrat&ext=heatmap" />
+    </td>
+  </tr>
+</table>
+
 
 ## 🧠 Profile Summary
 
