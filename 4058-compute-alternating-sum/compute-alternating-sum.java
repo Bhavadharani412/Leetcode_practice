@@ -1,10 +1,10 @@
 class Solution {
     public int alternatingSum(int[] nums) {
-        int sum = 0, diff = 0;
+        int sum = 0;
         for(int i = 0; i < nums.length;i++){
             if((i & 1) == 0) sum += nums[i];
-            else diff += nums[i];
+            else sum -= nums[i];
         }
-        return sum - diff;
+        return sum;
     }
 }
