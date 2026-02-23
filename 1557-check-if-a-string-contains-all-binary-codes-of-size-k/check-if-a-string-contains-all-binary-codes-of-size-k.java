@@ -5,7 +5,6 @@ class Solution {
         int mask = req - 1, hash = 0;
         for (int i = 0; i < s.length(); ++i) {
             hash = ((hash << 1) & mask) | (s.charAt(i) & 1);
-
             if (i >= k - 1 && !seen[hash]) {
                 seen[hash] = true;
                 req--;
