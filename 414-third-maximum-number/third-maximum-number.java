@@ -1,10 +1,15 @@
 class Solution {
     public int thirdMax(int[] nums) {
+
         Long first = Long.MIN_VALUE;
         Long second = Long.MIN_VALUE;
         Long third = Long.MIN_VALUE;
+
         for(int num : nums){
-            if(num == first || num == second || num == third) continue;
+
+            if(num == first || num == second || num == third)
+                continue;
+
             if(num > first){
                 third = second;
                 second = first;
@@ -18,6 +23,7 @@ class Solution {
                 third = (long) num;
             }
         }
+
         return third == Long.MIN_VALUE ? first.intValue() : third.intValue();
     }
 }
