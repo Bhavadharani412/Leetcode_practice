@@ -1,14 +1,20 @@
 class Solution {
     public String reverseWords(String s) {
         String[] str = s.split(" ");
-        StringBuilder result = new StringBuilder();
-        for(int i = 0; i < str.length;i++){
-            String rev = new StringBuilder(str[i]).reverse().toString();
-            result.append(rev);
-            if (i < str.length - 1) {
-                result.append(" ");
-            }
+        int n = str.length;
+        String res = "";
+        for(int iter = 0; iter < n;iter++){
+            res += strReverse(str[iter]);
         }
-        return result.toString();
+        return res.trim();
+    }
+    private static String strReverse(String str){
+        int len = str.length();
+        String ans = "";
+        for(int i = len - 1; i >= 0; i--){
+            ans += str.charAt(i);
+        }
+        ans +=" ";
+        return ans;
     }
 }
