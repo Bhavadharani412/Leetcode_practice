@@ -1,18 +1,19 @@
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
-        if(head == null) return null;
-        ListNode slow = head;
-        ListNode fast = head;
-        if(head.next != null) fast = fast.next;
-        while( fast != null){
-            if(fast.val == val){
-                fast = fast.next;
-                slow.next = fast;
-            }else{
-                slow = slow.next;
-                fast = fast.next;
-            }
+        if(head == null){
+            return null;
         }
-        return (head.val != val) ? head : head.next;
+        while(head!=null && head.val == val){
+            head=head.next;
+        }
+        ListNode iter = head, prev = null;
+        for(iter = head; iter != null; iter = iter.next){
+            if(iter.val == val){
+                if(iter.next == null) prev.next = null;
+                prev.next = iter.next;
+            }
+            else prev = iter;
+        }
+        return head;
     }
 }
