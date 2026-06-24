@@ -1,7 +1,7 @@
 public class Codec {
     StringBuilder res;
     public String serialize(TreeNode root) {
-        if(root == null) return "Null";
+        if(root == null) return "N";
         int nullmark = Integer.MIN_VALUE;
         Queue<TreeNode> q = new LinkedList<>();
         res = new StringBuilder();
@@ -9,23 +9,23 @@ public class Codec {
         while(q.size() > 0)
         {
             TreeNode curr = q.remove();
-            if(curr.val == nullmark){
-                res.append("Null,");
+            if(curr == null){
+                res.append("N,");
                 continue;
             }
             else{
                 res.append(curr.val);
                 res.append(",");
             }
-            q.add((curr.left == null) ? new TreeNode(nullmark) : curr.left);
-            q.add((curr.right == null) ? new TreeNode(nullmark) : curr.right);
+            q.add(curr.left);
+            q.add(curr.right);
         }
         res.deleteCharAt(res.length() - 1);
         System.out.println(res);
         return res.toString();
     }
     public TreeNode deserialize(String data) {
-        if(data.equals("Null")) return null;
+        if(data.equals("N")) return null;
         String[] arr = data.split(",");
         TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
         Queue<TreeNode> q = new LinkedList<>();
@@ -33,12 +33,12 @@ public class Codec {
         int i = 1;
         while (!q.isEmpty() && i < arr.length) {
             TreeNode curr = q.poll();
-            if (!arr[i].equals("Null")) {
+            if (!arr[i].equals("N")) {
                 curr.left = new TreeNode(Integer.parseInt(arr[i]));
                 q.offer(curr.left);
             }
             i++;
-            if (i < arr.length && !arr[i].equals("Null")) {
+            if (i < arr.length && !arr[i].equals("N")) {
                 curr.right = new TreeNode(Integer.parseInt(arr[i]));
                 q.offer(curr.right);
             }
