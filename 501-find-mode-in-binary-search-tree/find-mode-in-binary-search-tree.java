@@ -1,23 +1,29 @@
 class Solution {
-    HashMap<Integer, Integer> hm = new HashMap<>();
+    TreeNode prev = null;
+    int count = 0;
+    int maxcount = 0;
+    List<Integer> modes = new ArrayList<>();    
     public int[] findMode(TreeNode root) {
-        preorder(root);
-        int max = Integer.MIN_VALUE;
-        for (int freq : hm.values()) {
-            max = Math.max(max, freq);
+        inorder(root);
+        int[] ans = new int[modes.size()];
+        for(int i =0; i<ans.length;i++){
+            ans[i] = modes.get(i);
         }
-        ArrayList<Integer> list = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : hm.entrySet()) {
-            if (entry.getValue() == max) {
-                list.add(entry.getKey());
-            }
-        }
-        return list.stream().mapToInt(Integer::intValue).toArray();
+        return ans;
     }
-    private void preorder(TreeNode root) {
-        if (root == null) return;
-        hm.put(root.val, hm.getOrDefault(root.val, 0) + 1);
-        preorder(root.left);
-        preorder(root.right);
+    void inorder(TreeNode root){
+        if(root==null) return;
+        inorder(root.left);  
+        if(prev==null) count=1;
+        else if(prev.val==root.val) count++;
+        else count = 1;
+        if(count>maxcount){
+            maxcount=count;
+            modes.clear();
+            modes.add(root.val);
+        }
+        else if(count==maxcount) modes.add(root.val);
+        prev=root;
+        inorder(root.right);
     }
 }
