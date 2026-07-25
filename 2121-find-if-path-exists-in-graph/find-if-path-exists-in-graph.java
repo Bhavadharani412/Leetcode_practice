@@ -1,28 +1,30 @@
 class Solution {
-    public boolean validPath(int n, int[][] edges, int source, int destination) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int[] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            graph.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
-            graph.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
+    boolean found = false;
+    public boolean validPath(int n, int[][] edges, int src, int des) {
+        if(src == des) return true;
+        Map<Integer, List<Integer>> gr = new HashMap();
+        boolean[] vis = new boolean[n];
+        for(int i = 0; i < n; i++) gr.put(i, new ArrayList<>());
+        for(int[] ed : edges)
+        {
+            gr.get(ed[0]).add(ed[1]);
+            gr.get(ed[1]).add(ed[0]);
         }
-        
-        Set<Integer> visited = new HashSet<>();
-        return dfs(source, destination, graph, visited);
+        dfs(gr, vis, src, des);
+        return found;
     }
-    private boolean dfs(int node, int destination, Map<Integer, List<Integer>> graph, Set<Integer> visited) {
-        if (node == destination) {
-            return true;
-        }
-        visited.add(node);
-        for (int neighbor : graph.getOrDefault(node, new ArrayList<>())) {
-            if (!visited.contains(neighbor)) {
-                if (dfs(neighbor, destination, graph, visited)) {
-                    return true;
-                }
+    private void dfs(Map<Integer, List<Integer>> gr, boolean[] vis, int src, int des)
+    {
+        if(vis[src] || found) return;
+        vis[src] = true;
+        for(int nei : gr.get(src))
+        {
+            if(nei == des)
+            {
+                found = true;
+                break;
             }
+            if(!vis[nei]) dfs(gr, vis, nei, des);
         }
-        return false;
     }
 }
