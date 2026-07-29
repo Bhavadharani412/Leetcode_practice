@@ -1,12 +1,14 @@
 class Solution {
     public long maximumValueSum(int[] nums, int k, int[][] edges) {
-        long[] dp = {0, Long.MIN_VALUE};
+        long sum = 0;
+        long cnt = 0;
+        long node_left = Long.MAX_VALUE;
         for (int n : nums) {
-            long cnt0 = dp[0] + n, cnt1 = dp[1] + n;
             int x = n ^ k;
-            dp = new long[]{ Math.max(cnt0, dp[1] + x), 
-                             Math.max(cnt1, dp[0] + x) };
+            sum += Math.max(x, n);
+            if (x > n) cnt++;
+            node_left = Math.min(node_left, Math.abs(n - x));
         }
-        return dp[0];
+        return sum - (cnt % 2 != 0 ? node_left : 0);
     }
 }
