@@ -3,24 +3,25 @@ class Solution {
         long firstMax = Long.MIN_VALUE;
         long secMax = Long.MIN_VALUE;
         long thirdMax = Long.MIN_VALUE;
-        for(int i = 0; i < nums.length; i++){
-            if(nums[i] > firstMax){
+        int n = nums.length;
+        for(int i = 0; i < n; i++)
+        {
+            if(nums[i] > firstMax)
+            {
+                thirdMax = secMax;
+                secMax = firstMax;
                 firstMax = nums[i];
             }
-        }
-        for(int i = 0; i < nums.length; i++){
-            if(nums[i] > secMax && nums[i] != firstMax){
+            else if(nums[i] < firstMax && nums[i] > secMax)
+            {
+                thirdMax = secMax;
                 secMax = nums[i];
             }
-        }
-        for(int i = 0; i < nums.length; i++){
-            if(nums[i] > thirdMax && nums[i] != firstMax && nums[i] != secMax){
+            else if(nums[i] < secMax && nums[i] > thirdMax)
+            {
                 thirdMax = nums[i];
             }
         }
-        if(thirdMax == Long.MIN_VALUE){
-            return (int) firstMax;
-        }
-        return (int) thirdMax;
+        return (thirdMax != Long.MIN_VALUE) ? (int) thirdMax : (int) firstMax;
     }
 }
