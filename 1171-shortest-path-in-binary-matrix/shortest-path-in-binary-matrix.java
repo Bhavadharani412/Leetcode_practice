@@ -1,68 +1,33 @@
 class Solution {
-    class Pair{
-        int row, col, dist;
-
-        Pair(int row, int col, int dist){
-            this.row = row;
-            this.col = col;
-            this.dist = dist;
-        }
-    }
     public int shortestPathBinaryMatrix(int[][] grid) {
         int n = grid.length;
-        if(grid[0][0] == 1 || grid[n-1][n-1] == 1) return -1;
-        if(n == 1) return 1;
-
-        Queue<Pair> q = new ArrayDeque<>();
-        q.add(new Pair(0, 0, 1));
-
-        while(!q.isEmpty()){
-            Pair curr = q.poll();
-            int r = curr.row; // 0
-            int c = curr.col; // 0
-            int dist = curr.dist; // 1
-
-            if(r == n-1 && c == n-1) return dist;
-
-            // check up
-            if(r-1 >= 0 && grid[r-1][c] != 1){
-                q.add(new Pair(r-1, c, dist + 1));
-                grid[r-1][c] = 1; // visited
-            }
-            // check down
-            if(r + 1 < n && grid[r+1][c] != 1){
-                q.add(new Pair(r+1, c, dist + 1));
-                grid[r+1][c] = 1; // visited
-            }
-            // check right
-            if(c+1 < n && grid[r][c+1] != 1){
-                q.add(new Pair(r, c+1, dist + 1));
-                grid[r][c+1] = 1; // visited
-            }
-            // check left
-            if(c-1 >= 0 && grid[r][c-1] != 1){
-                q.add(new Pair(r, c-1, dist + 1));
-                grid[r][c-1] = 1; // visited
-            }
-            // check up left
-            if(r - 1 >= 0 && c - 1 >= 0 && grid[r-1][c-1] != 1){
-                q.add(new Pair(r-1, c-1, dist + 1));
-                grid[r-1][c-1] = 1; // visited
-            }
-            // check up right
-            if(r - 1 >= 0 && c + 1 < n && grid[r-1][c+1] != 1){
-                q.add(new Pair(r-1, c+1, dist + 1));
-                grid[r-1][c+1] = 1; // visited
-            }
-            // check down left
-            if(r + 1 < n && c - 1 >= 0 && grid[r+1][c-1] != 1){
-                q.add(new Pair(r+1, c-1, dist + 1));
-                grid[r+1][c-1] = 1; // visited
-            }
-            // check up
-            if(r + 1 < n && c + 1 < n && grid[r+1][c+1] != 1){
-                q.add(new Pair(r+1, c+1, dist + 1));
-                grid[r+1][c+1] = 1; // visited
+        // Start or destination is blocked
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) {
+            return -1;
+        }
+        // 8 possible directions
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+        boolean[][] visited = new boolean[n][n];
+        // Queue stores: {row, col, pathLength}
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{0, 0, 1});
+        visited[0][0] = true;
+        // bfs
+        while(q.isEmpty() == false)
+        {
+            int[] curr = q.poll();
+            int r = curr[0], c = curr[1], d = curr[2];
+            if(r == n-1 && c == n-1) return d;
+            for(int i = 0; i < 8; i++)
+            {
+                int nr = r + dx[i], nc = c + dy[i];
+                if(nr < 0 || nr >= n || nc < 0 || nc >= n || grid[nr][nc] == 1)  continue;
+                if(visited[nr][nc] == false)
+                {
+                    visited[nr][nc] = true;
+                    q.offer(new int[]{nr, nc, d + 1});
+                }
             }
         }
         return -1;
